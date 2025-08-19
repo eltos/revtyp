@@ -577,7 +577,7 @@
     it
     v(0.5em)
   }
-  set figure(supplement: "FIG.")
+  show figure.where(kind: figure): set figure(supplement: "FIG.")
   show figure.caption: it => {
     set par(first-line-indent: 0em)
     set text(size: 9.5pt)
@@ -593,6 +593,10 @@
       )
     })
   }
+
+  // tables
+  show figure.where(kind: table): set figure(supplement: "TABLE")
+  show figure.where(kind: table): set figure.caption(position: top)
   
   
   // equations
@@ -612,6 +616,8 @@
   set ref(supplement: it => {
     if it.func() == figure and it.kind == image {
       "Fig."
+    } else if it.func() == figure and it.kind == table {
+      "table"
     } else if it.func() == math.equation {
       "Eq."
     } else {
@@ -622,6 +628,8 @@
     if it.element != none and it.element.func() == math.equation {
       show regex("\d"): it => "(" + it + ")"
       it
+    } else if it.element != none and it.element.func() == heading {
+      [#it.element.supplement~#numbering("I.A", ..counter(heading).at(it.element.location()))]
     } else {
       it
     }
@@ -681,3 +689,42 @@
   body
 
 }
+
+
+
+
+
+
+
+/// Table in our style
+///
+/// - spec (str): Column alignment specification string such as "ccr"
+/// - header (alignment, none): header location (top and/or bottom) or none
+/// - contents: table contents
+/// -> table
+#let rev-table(spec, header: top, ..contents) = {
+  spec = spec.codepoints()
+  if header == none { header = alignment.center }
+  let args = (
+    columns: spec.len(),
+    align: spec.map(i => (a: auto, c: center, l: left, r: right).at(i)),
+    stroke: (x, y) => {
+      if y == 0 {(top: 0.08em, bottom: if header.y == top {0.05em})}
+      else if y > 1 {(top: 0em, bottom: 0.08em)}
+    },
+  )
+  for (key, value) in contents.named() {
+    args.insert(key, value)
+  }
+
+  show table.cell.where(y: 0): it => if header.y == top {strong(it)} else {it}
+  show table.cell.where(x: 0): it => if header.x == left {strong(it)} else {it}
+
+  table(
+    ..args,
+    ..contents.pos(),
+  )
+}
+
+
+
