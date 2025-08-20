@@ -6,7 +6,7 @@
  * GitHub repository: https://github.com/eltos/revtyp
  */
 
-#import "/revtyp.typ": revtyp
+#import "/revtyp.typ": revtyp, revtable
 //#import "@preview/revtyp:0.0.1": revtyp
 
 #show: revtyp.with(
@@ -49,7 +49,10 @@
   footer: (
     title-left: none,
     title-right: none,
-    center: [page #context counter(page).display() / #context counter(page).final().last()],
+    center: [
+      page #context counter(page).display()
+      of #context counter(page).final().last()
+    ],
   ),
   footnote-text: [
     Licensed under the terms of the 
@@ -65,11 +68,11 @@
 
 
 #import "@preview/physica:0.9.5": *
-#import "@preview/unify:0.7.1": unit, num, qty, numrange, qtyrange
+#import "@preview/zero:0.4.0"
 #import "@preview/lilaq:0.1.0" as lq
-#import "@preview/glossy:0.7.0": init-glossary
+#import "@preview/glossy:0.7.0"
 
-#show: init-glossary.with((
+#show: glossy.init-glossary.with((
   APS: "American Physical Society",
   PRAB: "Physical Review Accelerators and Beams",
   RF: "radio frequency",
@@ -79,7 +82,7 @@
 
 = Introduction
 
-This is a template for submission of manuscripts to the journal @PRAB // abbreviation
+This is a template for submission of manuscripts to @PRAB // abbreviation
 using the great, modern and *blazingly fast* typesetting system Typst @typst. // citation
 //
 Equations can be typeset inline like $f_"a"(x)$, and in display mode:
@@ -96,31 +99,51 @@ $
 $ <eq:mycustomlabel>
 
 they can be referenced as in @eq:mycustomlabel.
-The same works for the "placeholder" depicted in @fig:example.
+The same works for @fig:example.
+@fig:example[Figure] comes before @fig:rect[Figs.] and @fig:lilaq[].
+Referring to @sec:test or the data in @tab:parameters is also possible.
 
 
 #figure(
   placement: bottom, // `top`, `bottom` or `auto` for floating placement or `none` for inline placement
-  rect(width: 100%, height: 6cm),  
-  caption: [A placeholder figure without any visible content @example-journal-article.],
+  rect(width: 100%, height: 5cm, fill: gradient.linear(..color.map.crest, angle: 140deg)),
+  caption: [
+    A placeholder figure with a linear gradient @example-journal-article.
+  ],
 ) <fig:example>
 
 
 
 = Section
-== Subsection
-#lorem(100)
-== Subsection
+== Subsection <sec:test>
 #lorem(100)
 == Subsection
 #lorem(100)
 
 
 #figure(
+  placement: top,
+  revtable("rl", header: left,
+    stroke: (x, y) => if x==0 {(right: black + 0.5pt)},
+    
+    [ Ion       ],[ Carbon $attach("C", tl: 12, tr: 6+)$ ],
+    [ Frequency ],[ $f_"a" = "1~GHz"$ ],
+    [ Bandwidth ],[ $Delta f_1 = 0.01 f_"a"$ ],
+    
+  ),
+  caption: [
+    Parameters
+  ]
+) <tab:parameters>
+
+
+#figure(
   scope: "parent", // two column-figure
   placement: top, // `top`, `bottom` or `auto`
-  box(fill: silver, width: 100%, height: 2cm),
-  caption: [A column spanning figure. #lorem(25)],
+  box(fill: gradient.linear(..color.map.flare, angle: 120deg), width: 100%, height: 2cm),
+  caption: [
+    A column spanning figure. #lorem(25)
+  ],
 ) <fig:rect>
 
 
@@ -134,18 +157,34 @@ These can be found by exploring the Typst Universe at https://typst.app/universe
 
 == Physical quantities
 
-The *unify* package helps typesetting numbers and scientific quantities.
-Examples include quantities like
-#qty(1.2, "um") with reduced spacing between the number and unit
-and features like digit grouping in $q=#num(0.12345678)$.
-Uncertain quantities like $f_"rev"=qty("325.2+-0.1", "kHz")$
-as well as tolerances such as $h=qty("8.3+0.1-0.2  e-2", "mm")$ are supported.
+The *zero* package helps typesetting numbers and scientific quantities.
 
-Plain units can be written as
-#unit("tesla meter") or #unit("T m") (not Tm or T m which are something different).
-More examples: #qty(3, "keV"), #qty(4, "GeV"), $qty("100", "kW")$, #qty(7, "um").
+//#zero.set-num(uncertainty-mode: "compact")
+#let quantify(
+  zero-options: (product: sym.dot, omit-unity-mantissa: true, fraction: "inline"),
+  body
+) = {
+  let q(value, unit) = zero.zi.declare(unit.text)(value.text, ..zero-options)
+  let rnum = "[-\u{2212}]?\d+(?:.\d+)?(?:\+(?:\d+(?:.\d+)?)?-\d+(?:.\d+)?)?(?:e-?\d+)?"
+  let runit = "[a-zA-Zµ%°^\d*/]+"
+  let expression = regex("(" + rnum + ")[\u{00A0}~](" + runit + ")")
+  show expression: it => {
+    //set text(fill: blue)
+    let (value, unit) = it.text.match(expression).captures
+    unit = unit.replace("*", " ")
+    q[#value][#unit]
+  }
+  body
+}
+#show: quantify
+
+Using the custom show-rule above, quantities are nicely formatted
+including thin spaces between the number and unit like in 1.2~µm,
+digit grouping for $x = "0.12345678~m"$,
+uncertain quantities like $f_"rev" = "325.2+-0.1~kHz"$
+as well as tolerances such as $h = "8.3+0.1-0.2e-2~mm"$.
 //
-For details refer to the package documentation at https://typst.app/universe/package/unify.
+For details refer to the documentation at https://typst.app/universe/package/zero.
 
 
 
@@ -161,6 +200,7 @@ With the *lilaq* package, plots can be create directly in the document, so you c
 #show: lq.set-diagram(xaxis: (mirror: (ticks: false)), yaxis: (mirror: (ticks: false)))
 
 #figure(
+  placement: auto,
   lq.diagram(
     
     // plot a sine function
@@ -176,9 +216,10 @@ With the *lilaq* package, plots can be create directly in the document, so you c
     xlabel: [Angle ~ $x$ / rad], xlim: (0, 10),
     ylabel: [$y$ / m], ylim: (-1.5, 2.5),
     
-  ),
-  placement: auto, // `top`, `bottom` or `auto` for floating placement or `none` for inline placement
-  caption: [A plot create with the Lilaq package directly inside the typst source code]
+  ),  
+  caption: [
+    A plot create with Lilaq.
+  ]
 ) <fig:lilaq>
 
 

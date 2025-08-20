@@ -629,7 +629,7 @@
       show regex("\d"): it => "(" + it + ")"
       it
     } else if it.element != none and it.element.func() == heading {
-      [#it.element.supplement~#numbering("I.A", ..counter(heading).at(it.element.location()))]
+      [section~#numbering("I A", ..counter(heading).at(it.element.location()))]
     } else {
       it
     }
@@ -702,7 +702,7 @@
 /// - header (alignment, none): header location (top and/or bottom) or none
 /// - contents: table contents
 /// -> table
-#let rev-table(spec, header: top, ..contents) = {
+#let revtable(spec, header: top, ..contents) = {
   spec = spec.codepoints()
   if header == none { header = alignment.center }
   let args = (
