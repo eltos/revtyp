@@ -203,17 +203,14 @@
     linebreaks: "optimized"
   )
 
-  show link: set text(fill: rgb(46, 48, 146))
-  show cite: set text(fill: rgb(46, 48, 146))
-  show ref: it => {
-    show regex("\(?\d\)?"): set text(fill: rgb(46, 48, 146))
-    it
-  }
+  let link-color = rgb(46, 48, 146)
+  show link: set text(fill: link-color)
+  show cite: set text(fill: link-color)
 
 
   // draft utilities
 
-  set par.line(..if show-line-numbers {(numbering: it => text(fill: gray)[#it])})
+  set par.line(..if show-line-numbers {(numbering: it => text(fill: gray, size: 0.8em)[#it])})
 
 
   // Note: footnotes not working in parent scoped placement with two column mode.
@@ -548,8 +545,9 @@
   
   // Headings
   show heading.where(level: 1): set heading(numbering: "I.")
-  show heading.where(level: 2): set heading(numbering: (i1, i2) => numbering("A.", i2))
+  show heading.where(level: 2): set heading(numbering: (..n, i) => numbering("A.", i))
   show heading: set align(center)
+  set heading(hanging-indent: 0pt) // workaround for https://github.com/typst/typst/issues/6834
   show heading: set text(size: 10.5pt, weight: "bold", style: "normal", hyphenate: false)
   show heading.where(level: 1): upper
   show heading.where(level: 1): set block(above: 22pt, below: 5pt) // 11
@@ -595,8 +593,8 @@
   }
 
   // tables
-  show figure.where(kind: table): set figure(supplement: "TABLE")
-  show figure.where(kind: table): set figure.caption(position: top)
+  show figure.where(kind: table): set figure(supplement: "TABLE", numbering: "I")
+  show figure.where(kind: table): set figure.caption(position: top, separator: ".")
   
   
   // equations
@@ -625,11 +623,13 @@
     }
   })
   show ref: it => {
+    show regex("\d+|[IVXL]+"): set text(fill: link-color)
     if it.element != none and it.element.func() == math.equation {
-      show regex("\d"): it => "(" + it + ")"
+      show regex("\d"): it => text(fill: link-color, "(" + it + ")")
       it
     } else if it.element != none and it.element.func() == heading {
-      [section~#numbering("I A", ..counter(heading).at(it.element.location()))]
+      let supplement = if type(it.supplement) == function { "section" } else { it.supplement }
+      [#supplement #text(fill: link-color, numbering("I A", ..counter(heading).at(it.element.location())))]
     } else {
       it
     }

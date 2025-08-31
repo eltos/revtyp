@@ -187,6 +187,7 @@
           <!-- Based on arXiv format -->
           <group delimiter=", ">
             <text variable="title" text-case="title" font-style="italic"/>
+            <text variable="note"/>
             <choose>
               <if variable="DOI">
                 <text value="@" prefix="<[[[" suffix="]]]>"/> <!-- Modified for typst link injection -->
@@ -197,8 +198,7 @@
               <else>
                 <text value="(unpublished)"/>
               </else>
-            </choose>
-            
+            </choose>            
           </group>
         </else-if>
         <else>

@@ -166,7 +166,7 @@ The *zero* package helps typesetting numbers and scientific quantities.
 ) = {
   let q(value, unit) = zero.zi.declare(unit.text)(value.text, ..zero-options)
   let rnum = "[-\u{2212}]?\d+(?:.\d+)?(?:\+(?:\d+(?:.\d+)?)?-\d+(?:.\d+)?)?(?:e-?\d+)?"
-  let runit = "[a-zA-Zµ%°^\d*/]+"
+  let runit = "[a-zA-ZΩµ%°^\d*/]+"
   let expression = regex("(" + rnum + ")[\u{00A0}~](" + runit + ")")
   show expression: it => {
     //set text(fill: blue)
