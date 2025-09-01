@@ -82,6 +82,10 @@
   /// Switch to show line numbers
   /// -> bool
   show-line-numbers: false,
+
+  /// Switch to adjust paper format
+  /// -> bool
+  paper: "us-letter",
   
   /// The paper content
   /// -> content
@@ -178,9 +182,9 @@
 
 
   // layout
-  
+
   set page(
-    paper: "us-letter",
+    paper: paper,
     margin: (
       x: 0.725in,
       top: 0.71in,
