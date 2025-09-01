@@ -560,7 +560,7 @@
     if previous_headings.len() > 0 {
       let ploc = previous_headings.last().location().position()
       let iloc = it.location().position()
-      if (iloc.page == ploc.page and iloc.x == ploc.x and iloc.y - ploc.y < 30pt) {
+      if (iloc.page == ploc.page and iloc.x == ploc.x and iloc.y - ploc.y < 35pt) {
         v(-15pt)
       }
     }
