@@ -579,7 +579,7 @@
     it
     v(0.5em)
   }
-  show figure.where(kind: figure): set figure(supplement: "FIG.")
+  show figure: set figure(supplement: "FIG.")
   show figure.caption: it => {
     set par(first-line-indent: 0em)
     set text(size: 9.5pt)
