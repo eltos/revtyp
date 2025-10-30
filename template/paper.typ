@@ -6,8 +6,7 @@
  * GitHub repository: https://github.com/eltos/revtyp
  */
 
-#import "/revtyp.typ": revtyp, revtable
-//#import "@preview/revtyp:0.0.1": revtyp
+#import "@preview/revtyp:0.1": revtyp
 
 #show: revtyp.with(
   journal: "PRAB",
