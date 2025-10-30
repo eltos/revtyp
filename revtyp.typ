@@ -541,6 +541,7 @@
   set align(left)
   set par(
     first-line-indent: (amount: 1em, all:false),
+    justification-limits: (tracking: (min: -0.012em, max: 0.0em),),
     justify: true,
   )
   set text(
@@ -603,7 +604,7 @@
   
   // equations
   set math.equation(numbering: "(1)")
-  show math.equation.where(block: true): set block(above: 16pt, below: 14pt)
+  show math.equation.where(block: true): set block(above: 14pt, below: 14pt)
   show math.equation.where(block: true): it => {
     // automaticaly hide equation number if no label attached
     if not it.has("label") [
