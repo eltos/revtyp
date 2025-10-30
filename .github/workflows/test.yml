@@ -49,8 +49,8 @@ jobs:
         with:
           name: PDF
           path: |
-            $NAME/*.pdf
-            $NAME/thumbnail.webp
+            ${{ env.NAME }}/*.pdf
+            ${{ env.NAME }}/thumbnail.webp
           if-no-files-found: error
           retention-days: 7
 
