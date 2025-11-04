@@ -1,4 +1,6 @@
-#import "/revtyp.typ": revtyp, revtable, widetext-top, widetext-bottom, widetext-page
+#import "/revtyp.typ": (
+  revtable, revtyp, widetext-bottom, widetext-page, widetext-top,
+)
 
 #show: revtyp.with(
   journal: "PRAB",
@@ -14,7 +16,7 @@
 
 #block(stroke: 1pt + gray, height: 1fr, width: 100%)
 #colbreak()
-#block(stroke: 1pt + gray, height: 19cm, width: 100%)
+#block(stroke: 1pt + gray, height: 18.7cm, width: 100%)
 #lorem(19)
 Here we switch to wide text due to a very long equation
 //
@@ -76,7 +78,7 @@ Here we switch again to the wide text mode due to a very long equation
     x
     = sqrt((a/(a_1+a_2))^2 + (b/(b_1+b_2+b_3))^2 + (c/(c_1+c_2+c_3+c_4))^2 + (d/(d_1+d_2+d_3+d_4+d_5))^2)
   $ <eq:wide>
-  
+
   #lorem(33)
   And then back
   //
@@ -164,7 +166,7 @@ Here we end the paragraph.
     x
     = sqrt((a/(a_1+a_2))^2 + (b/(b_1+b_2+b_3))^2 + (c/(c_1+c_2+c_3+c_4))^2 + (d/(d_1+d_2+d_3+d_4+d_5))^2)
   $ <eq:wide>
-  
+
   #lorem(20)
   And then we end the paragraph.
   //
