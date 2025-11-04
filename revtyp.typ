@@ -204,7 +204,11 @@
   set par(
     spacing: 0.65em,
     leading: 0.55em,
-    linebreaks: "optimized"
+    linebreaks: "optimized",
+    justification-limits: (
+      spacing: (min: 70%, max: 130%),
+      tracking: (min: -0.01em, max: 0.02em),
+    ),
   )
 
   let link-color = rgb(46, 48, 146)
@@ -306,14 +310,14 @@
        * Title
        */
       { 
+
+        show std.title: set text(size: 12.7pt, weight: "bold")
+        show std.title: set block(below: 14.4pt)
       
-        set text(size: 12.7pt, weight: "bold")
-        
-        title
+        std.title(title)
 
       }
       
-      v(6pt)
 
 
       /*
@@ -541,7 +545,6 @@
   set align(left)
   set par(
     first-line-indent: (amount: 1em, all:false),
-    justification-limits: (tracking: (min: -0.012em, max: 0.0em),),
     justify: true,
   )
   set text(
