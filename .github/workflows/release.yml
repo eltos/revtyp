@@ -36,7 +36,7 @@ jobs:
           # Copy
           cp -r ../$NAME/* packages/preview/$NAME/$VERSION/
           rm -drf packages/preview/$NAME/$VERSION/tests
-          ls -l packages/preview/$NAMEw/$VERSION/
+          ls -l packages/preview/$NAME/$VERSION/
           # Commit
           git config user.name "Eltos"
           git config user.email "eltos@outlook.de"
