@@ -557,7 +557,7 @@
   show heading.where(level: 1): upper
   show heading.where(level: 1): set block(above: 22pt, below: 5pt) // 11
   show heading.where(level: 2): set block(above: 22pt, below: 2pt) // 8
-  show heading: it => { it + h(0pt) }
+  show heading: it => { it + h(0pt) } // force indent on first paragraph of section
   show heading: it => {
     // Trick to reduce spacing between consecutive headings
     // See https://github.com/typst/typst/issues/2953
@@ -733,3 +733,64 @@
 
 
 
+
+/// Wide text environment at the top of a page, followed by two column layout
+///
+#let widetext-top(
+  continue-paragraph-begin: true,
+  continue-paragraph-end: true,
+  content
+) = {
+  if (continue-paragraph-begin) { linebreak(justify: true) }
+  place(top, float: true, scope: "parent", block(width: 100%)[
+    #if (not continue-paragraph-begin) { h(1em, weak: false)}
+    #content
+    #if (continue-paragraph-end) { linebreak(justify: true) }
+    #move(dy: 8pt, curve(
+      stroke: 0.5pt,
+      curve.move((50%, 7pt)),
+      curve.line((50%, 0pt)), 
+      curve.line((100%, 0pt))
+    ))
+  ])
+  if (continue-paragraph-end) { block(spacing: 0pt) }
+}
+
+/// Wide text environment at the bottom of a page, preceeded by two column layout
+///
+#let widetext-bottom(
+  continue-paragraph-begin: true,
+  continue-paragraph-end: true,
+  content
+) = {
+  if (continue-paragraph-begin) { linebreak(justify: true) }
+  place(bottom, float: true, scope: "parent", block(width: 100%)[
+    #move(dy:-6pt, curve(
+      stroke: 0.5pt,
+      curve.line((50%, 0pt)),
+      curve.line((50%, -7pt))
+    ))
+    #v(6pt)
+    #if (not continue-paragraph-begin) { h(1em, weak: false) }
+    #content
+    #if (continue-paragraph-end) { linebreak(justify: true) }
+  ])
+  if (continue-paragraph-end) { block(spacing: 0pt) }
+}
+
+/// Wide text environment filling a whole page
+///
+#let widetext-page(
+  continue-paragraph-begin: true,
+  continue-paragraph-end: true,
+  content
+) = {
+  if (continue-paragraph-begin) { linebreak(justify: true) }
+  pagebreak()
+  place(top, float: true, scope: "parent", block(width: 100%, height: 100%, {
+    if (not continue-paragraph-begin) { h(1em, weak: false) }
+    content
+    if (continue-paragraph-end) { linebreak(justify: true) }
+  }))
+  if (not continue-paragraph-end) { h(1em) }
+}
