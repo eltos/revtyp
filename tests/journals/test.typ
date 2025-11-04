@@ -9,7 +9,7 @@
 #import "/revtyp.typ": revtable, revtyp
 
 
-#let text-config = (
+#let test-config = (
   // Author list
   authors: (
     (name: "C. Author", at: "uni", email: "mail@example.com"),
@@ -148,7 +148,7 @@
 #show: revtyp.with(
   journal: "PRAB",
   title: [Paper template in ABS PRAB style],
-  ..text-config,
+  ..test-config,
 )
 #test-content
 
