@@ -6,17 +6,20 @@
  * GitHub repository: https://github.com/eltos/revtyp
  */
 
-#import "/revtyp.typ": revtyp, revtable
+#import "/revtyp.typ": revtable, revtyp
 
 
 #let text-config = (
-  
   // Author list
   authors: (
     (name: "C. Author", at: "uni", email: "mail@example.com"),
     (name: "P. Coauthor", at: ("uni", "third"), orcid: "0000-0000-0000-0000"),
     (name: "J. Cockcroft", at: ("INP", "third")),
-    (name: "C. D. Anderson", at: "INP", note: "Present address: Home Office, City, Country"),
+    (
+      name: "C. D. Anderson",
+      at: "INP",
+      note: "Present address: Home Office, City, Country",
+    ),
     (names: ("N. Bohr", "A. Einstein", "M. Curie", "E. Lawrence"), at: "INP"),
     //(names: ("A. Group", "O. F. People"), at: "Single Use Primary Affiliation, Shortcut Way"),
   ),
@@ -26,12 +29,10 @@
     third: "The Third Institute, City, Country",
   ),
   group-by-affiliation: true,
-  
   // Paper abstract
   abstract: [
     #lorem(50)
   ],
-  
   // Other optional information
   date: [(Drafted #datetime.today().display("[day] [month repr:long] [year]");)],
   doi: "https://doi.org/10.1103/XXX-000",
@@ -49,15 +50,15 @@
     ],
   ),
   footnote-text: [
-    Licensed under the terms of the 
-    #link("https://creativecommons.org/licenses/by/4.0/")[Creative Commons Attribution 4.0 International]
+    Licensed under the terms of the
+    #link(
+      "https://creativecommons.org/licenses/by/4.0/",
+    )[Creative Commons Attribution 4.0 International]
     license. Further distribution of this work must maintain attribution to the authors and document title.
   ],
   //wide-footnotes: true,
-
   // Writing utilities
   //show-line-numbers: true,
-  
 )
 
 
@@ -66,19 +67,19 @@
 
   = Introduction
 
-  #lorem(20)  
+  #lorem(20)
   Inline equations like $f_"a"(x)$ and display mode:
-  
+
   $
     e^("i" pi) + 1 = 0
   $
-  
+
   With a label
-  
+
   $
-    e^("i" pi) + 1 = 0 
+    e^("i" pi) + 1 = 0
   $ <eq:mycustomlabel>
-  
+
   reference as @eq:mycustomlabel.
   Reference@fig:example.
   @fig:example[Figure] is referenced, @fig:example[Figs.] and @fig:rect[] too.
@@ -87,33 +88,34 @@
   Citing @example-journal-article as well as
   @example-proceedings @typst.
   #lorem(20)
-  
-  
+
+
   #figure(
     rect(width: 100%),
     caption: [
       A placeholder figure.
     ],
   ) <fig:example>
-  
+
   = Section
   == Subsection <sec:test>
   #lorem(15)
   == Subsection
   #lorem(15)
-  
-  
+
+
   #figure(
+    // @typstyle off
     revtable("rll", header: top,
       [ AAA ],[ BB ],[ C ],
       [ 0   ],[ 1  ],[ 2 ],
     ),
     caption: [
       Parameters
-    ]
+    ],
   ) <tab:parameters>
-  
-  
+
+
   #figure(
     scope: "parent",
     placement: bottom, // `top`, `bottom` or `auto`
@@ -125,18 +127,18 @@
 
 
 
-  
+
   #show heading: set heading(numbering: none)
-  
+
   = ACKNOWLEDGMENTS
-  
+
   We thank ...
-  
-  
+
+
   #bibliography("references.bib")
 
 
-  
+
 ]
 
 
