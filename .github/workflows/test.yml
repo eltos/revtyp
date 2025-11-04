@@ -1,0 +1,82 @@
+name: Test
+
+on: [ push, pull_request ]
+
+env:
+  NAME: revtyp
+
+jobs:
+  compile:
+    name: Compile template with typst ${{ matrix.typst-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        typst-version: [ '0.14' ]
+    steps:
+      - uses: typst-community/setup-typst@v4
+        with:
+          typst-version: ${{ matrix.typst-version }}
+          allow-prereleases: true
+      - name: Install webp
+        run: |
+          which cwebp || sudo apt install webp
+      - uses: actions/checkout@v4
+      - name: Extract version
+        run: |
+          VERSION=$(awk -F'= *' '/^version/{gsub(/"/,"",$2);print $2}' typst.toml)
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+      - name: Link local template package
+        run: |
+          mkdir -p ~/.local/share/typst/packages/preview/$NAME
+          ln -s $(pwd) ~/.local/share/typst/packages/preview/$NAME/$VERSION
+      - name: Install font
+        run: |
+          sudo apt install tex-gyre
+      - name: Init & compile
+        run: |
+          typst init @preview/$NAME:$VERSION
+          cd $NAME
+          ls -l
+          grep "#import \"@preview/$NAME:$VERSION\"" *.typ
+          typst compile *.typ
+          ls -l
+      - name: Create thumbnail
+        run: |
+          cd $NAME
+          typst compile --pages 1 --ppi 250 *.typ thumbnail.png
+          cwebp -lossless thumbnail.png -o thumbnail.webp
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PDF
+          path: |
+            ${{ env.NAME }}/*.pdf
+            ${{ env.NAME }}/thumbnail.webp
+          if-no-files-found: error
+          retention-days: 7
+
+  tests:
+    name: Run tests with tytanic
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install tytanic
+        uses: taiki-e/cache-cargo-install-action@v2
+        with:
+          tool: tytanic@0.3.1
+      - name: Install font
+        run: |
+          sudo apt install tex-gyre
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run test suite
+        run: |
+          tt run --no-fail-fast --use-system-fonts
+      - name: Archive artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: artifacts
+          path: |
+            tests/**/diff/*.png
+            tests/**/out/*.png
+            tests/**/ref/*.png
+          retention-days: 7

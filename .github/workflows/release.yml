@@ -1,0 +1,46 @@
+name: Push to eltos/typst-packages
+
+on:
+  workflow_run:
+    branches: [main]
+    workflows: [test]
+    types: [completed]
+
+env:
+  NAME: revtyp
+  
+jobs:
+  push-to-eltos-typst-packages:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: ${{ env.NAME }}
+      - uses: actions/checkout@v4
+        with:
+          repository: eltos/typst-packages
+          ssh-key: ${{ secrets.ELTOS_TYPST_PACKAGES_DEPLOY_KEY }}
+          path: typst-packages
+      - name: Extract version
+        run: |
+          VERSION=$(awk -F'= *' '/^version/{gsub(/"/,"",$2);print $2}' $NAME/typst.toml)
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+      - name: Copy, commit & push
+        run: |
+          cd typst-packages
+          git branch -D $NAME-$VERSION 2>/dev/null || true
+          git checkout -b $NAME-$VERSION
+          mkdir -p packages/preview/$NAME/$VERSION
+          rm -drf packages/preview/$NAME/$VERSION/*
+          # Copy
+          cp -r ../$NAME/* packages/preview/$NAME/$VERSION/
+          rm -drf packages/preview/$NAME/$VERSION/tests
+          ls -l packages/preview/$NAMEw/$VERSION/
+          # Commit
+          git config user.name "Eltos"
+          git config user.email "eltos@outlook.de"
+          git add packages/preview/$NAME$VERSION/
+          git commit -m "$NAME:$VERSION"
+          git config push.autoSetupRemote true
+          git push --force

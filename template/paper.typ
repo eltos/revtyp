@@ -6,7 +6,7 @@
  * GitHub repository: https://github.com/eltos/revtyp
  */
 
-#import "@preview/revtyp:0.0.1": revtyp
+#import "@preview/revtyp:0.1.0": revtable, revtyp
 
 #show: revtyp.with(
   journal: "PRAB",
@@ -21,7 +21,11 @@
     (name: "C. Author", at: "uni", email: "mail@example.com"),
     (name: "P. Coauthor", at: ("uni", "third"), orcid: "0000-0000-0000-0000"),
     (name: "J. Cockcroft", at: ("INP", "third")),
-    (name: "C. D. Anderson", at: "INP", note: "Present address: Home Office, City, Country"),
+    (
+      name: "C. D. Anderson",
+      at: "INP",
+      note: "Present address: Home Office, City, Country",
+    ),
     (names: ("N. Bohr", "A. Einstein", "M. Curie", "E. Lawrence"), at: "INP"),
     //(names: ("A. Group", "O. F. People"), at: "Single Use Primary Affiliation, Shortcut Way"),
   ),
@@ -31,7 +35,7 @@
     third: "The Third Institute, City, Country",
   ),
   group-by-affiliation: true,
-  
+
   // Paper abstract
   abstract: [
     #lorem(100)
@@ -54,8 +58,10 @@
     ],
   ),
   footnote-text: [
-    Licensed under the terms of the 
-    #link("https://creativecommons.org/licenses/by/4.0/")[Creative Commons Attribution 4.0 International]
+    Licensed under the terms of the
+    #link(
+      "https://creativecommons.org/licenses/by/4.0/",
+    )[Creative Commons Attribution 4.0 International]
     license. Further distribution of this work must maintain attribution to the authors and document title.
   ],
   //wide-footnotes: true,
@@ -87,14 +93,14 @@ using the great, modern and *blazingly fast* typesetting system Typst @typst. //
 Equations can be typeset inline like $f_"a"(x)$, and in display mode:
 
 $
-  curl E &= - pdv(B, t) \
-  integral.cont_(partial A) E dd(s) &= - integral.double_A pdv(B, t) dd(A)
+                             curl E & = - pdv(B, t) \
+  integral.cont_(partial A) E dd(s) & = - integral.double_A pdv(B, t) dd(A)
 $
 
 By adding a label
 
 $
-  e^("i" pi) + 1 = 0 
+  e^("i" pi) + 1 = 0
 $ <eq:mycustomlabel>
 
 they can be referenced as in @eq:mycustomlabel.
@@ -105,7 +111,10 @@ Referring to @sec:test or the data in @tab:parameters is also possible.
 
 #figure(
   placement: bottom, // `top`, `bottom` or `auto` for floating placement or `none` for inline placement
-  rect(width: 100%, height: 5cm, fill: gradient.linear(..color.map.crest, angle: 140deg)),
+  rect(width: 100%, height: 5cm, fill: gradient.linear(
+    ..color.map.crest,
+    angle: 140deg,
+  )),
   caption: [
     A placeholder figure with a linear gradient @example-journal-article.
   ],
@@ -122,24 +131,29 @@ Referring to @sec:test or the data in @tab:parameters is also possible.
 
 #figure(
   placement: top,
+  // @typstyle off
   revtable("rl", header: left,
     stroke: (x, y) => if x==0 {(right: black + 0.5pt)},
-    
+
     [ Ion       ],[ Carbon $attach("C", tl: 12, tr: 6+)$ ],
     [ Frequency ],[ $f_"a" = "1~GHz"$ ],
     [ Bandwidth ],[ $Delta f_1 = 0.01 f_"a"$ ],
-    
+
   ),
   caption: [
     Parameters
-  ]
+  ],
 ) <tab:parameters>
 
 
 #figure(
   scope: "parent", // two column-figure
   placement: top, // `top`, `bottom` or `auto`
-  box(fill: gradient.linear(..color.map.flare, angle: 120deg), width: 100%, height: 2cm),
+  box(
+    fill: gradient.linear(..color.map.flare, angle: 120deg),
+    width: 100%,
+    height: 2cm,
+  ),
   caption: [
     A column spanning figure. #lorem(25)
   ],
@@ -160,8 +174,12 @@ The *zero* package helps typesetting numbers and scientific quantities.
 
 //#zero.set-num(uncertainty-mode: "compact")
 #let quantify(
-  zero-options: (product: sym.dot, omit-unity-mantissa: true, fraction: "inline"),
-  body
+  zero-options: (
+    product: sym.dot,
+    omit-unity-mantissa: true,
+    fraction: "inline",
+  ),
+  body,
 ) = {
   let q(value, unit) = zero.zi.declare(unit.text)(value.text, ..zero-options)
   let rnum = "[-\u{2212}]?\d+(?:.\d+)?(?:\+(?:\d+(?:.\d+)?)?-\d+(?:.\d+)?)?(?:e-?\d+)?"
@@ -196,29 +214,39 @@ With the *lilaq* package, plots can be create directly in the document, so you c
 // general plot styling options
 #show lq.selector(lq.diagram): set text(.9em)
 #show: lq.set-tick(outset: 3pt, inset: 0pt)
-#show: lq.set-diagram(xaxis: (mirror: (ticks: false)), yaxis: (mirror: (ticks: false)))
+#show: lq.set-diagram(
+  xaxis: (mirror: (ticks: false)),
+  yaxis: (mirror: (ticks: false)),
+)
 
 #figure(
   placement: auto,
   lq.diagram(
-    
     // plot a sine function
     let x = lq.linspace(0, 10),
     let y = x.map(x => calc.cos(x)),
     lq.plot(x, y, mark: none, label: [$cos(x)$]),
-    
+
     // plot some data (practically you can load data from a file using `json` etc.)
-    lq.plot((1, 2, 3, 7, 9), (-1, 1.8, 0.7, -0.3, 1), yerr: 0.3, mark: "o", stroke: (dash: "dashed"), label: [Data]),
-    
+    lq.plot(
+      (1, 2, 3, 7, 9),
+      (-1, 1.8, 0.7, -0.3, 1),
+      yerr: 0.3,
+      mark: "o",
+      stroke: (dash: "dashed"),
+      label: [Data],
+    ),
+
     // adjust plot layout
     height: 3cm,
-    xlabel: [Angle ~ $x$ / rad], xlim: (0, 10),
-    ylabel: [$y$ / m], ylim: (-1.5, 2.5),
-    
-  ),  
+    xlabel: [Angle ~ $x$ / rad],
+    xlim: (0, 10),
+    ylabel: [$y$ / m],
+    ylim: (-1.5, 2.5),
+  ),
   caption: [
     A plot create with Lilaq.
-  ]
+  ],
 ) <fig:lilaq>
 
 
@@ -260,7 +288,7 @@ We thank ...
   scope: "parent",
   float: true,
   clearance: 0pt, // TODO: increase clearance for manual column balancing
-  []
+  [],
 )
 
 
