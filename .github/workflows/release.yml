@@ -40,7 +40,7 @@ jobs:
           # Commit
           git config user.name "Eltos"
           git config user.email "eltos@outlook.de"
-          git add packages/preview/$NAME$VERSION/
+          git add packages/preview/$NAME/$VERSION/
           git commit -m "$NAME:$VERSION"
           git config push.autoSetupRemote true
           git push --force
