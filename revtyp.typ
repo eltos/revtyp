@@ -182,8 +182,8 @@
     leading: 0.55em,
     linebreaks: "optimized",
     justification-limits: (
-      spacing: (min: 70%, max: 130%),
-      tracking: (min: -0.01em, max: 0.02em),
+      spacing: (min: 67%, max: 130%),
+      tracking: (min: -0.015em, max: 0.02em),
     ),
   )
 
@@ -755,6 +755,7 @@
   content,
 ) = {
   if (continue-paragraph-begin) { linebreak(justify: true) }
+  pagebreak()
   place(top, float: true, scope: "parent", block(width: 100%)[
     #if (not continue-paragraph-begin) { h(1em, weak: false) }
     #content
@@ -766,7 +767,7 @@
       curve.line((100%, 0pt)),
     ))
   ])
-  if (continue-paragraph-end) { block(spacing: 0pt) }
+  if (not continue-paragraph-end) { h(1em) }
 }
 
 /// Wide text environment at the bottom of a page, preceeded by two column layout
@@ -788,7 +789,8 @@
     #content
     #if (continue-paragraph-end) { linebreak(justify: true) }
   ])
-  if (continue-paragraph-end) { block(spacing: 0pt) }
+  pagebreak()
+  if (not continue-paragraph-end) { h(1em) }
 }
 
 /// Wide text environment filling a whole page
