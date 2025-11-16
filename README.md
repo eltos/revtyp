@@ -12,7 +12,7 @@ Typst template for papers in the style of the journal [Physical Review Accelerat
 In the [typst web app](https://typst.app/app?template=revtyp) select "start from template" and search for the revtyp template.
 Alternatively, use the "create project" button at the top of the package's [typst universe page](https://typst.app/universe/package/revtyp).
 
-### Local installation
+### Local
 Run these commands inside your terminal:
 ```sh
 typst init @preview/revtyp
