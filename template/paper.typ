@@ -72,9 +72,9 @@
 
 
 
-#import "@preview/physica:0.9.5": *
-#import "@preview/zero:0.4.0"
-#import "@preview/lilaq:0.1.0" as lq
+#import "@preview/physica:0.9.7": *
+#import "@preview/zero:0.5.0"
+#import "@preview/lilaq:0.5.0" as lq
 #import "@preview/glossy:0.7.0"
 
 #show: glossy.init-glossary.with((
