@@ -71,13 +71,13 @@
   Inline equations like $f_"a"(x)$ and display mode:
 
   $
-    e^("i" pi) + 1 = 0
+    e^("i"pi) + 1 = 0
   $
 
   With a label
 
   $
-    e^("i" pi) + 1 = 0
+    e^("i"pi) + 1 = 0
   $ <eq:mycustomlabel>
 
   reference as @eq:mycustomlabel.
