@@ -100,7 +100,7 @@ $
 By adding a label
 
 $
-  e^("i" pi) + 1 = 0
+  e^("i"pi) + 1 = 0
 $ <eq:mycustomlabel>
 
 they can be referenced as in @eq:mycustomlabel.
