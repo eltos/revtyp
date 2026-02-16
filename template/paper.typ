@@ -31,7 +31,7 @@
   ),
   affiliations: (
     uni: [#link("https://ror.org/...")[Town University], City, Country],
-    INP: [#link("https://ror.org/...")[Institute of Nobel Physics], Stockhold, Sweden],
+    INP: [#link("https://ror.org/...")[Institute of Nobel Physics], Stockholm, Sweden],
     third: "The Third Institute, City, Country",
   ),
   group-by-affiliation: true,
