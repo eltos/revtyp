@@ -505,7 +505,7 @@
       line(length: 35pt, stroke: 0.5pt)
 
       context for (symbol, text) in footnotes.get() {
-        h(0.7em) + super(symbol) + sym.space.med + text
+        h(0.7em) + super(symbol) + /*sym.space.med +*/ text
         linebreak()
       }
 
