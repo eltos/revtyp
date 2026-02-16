@@ -627,7 +627,7 @@
     if it.func() == figure and it.kind == image {
       "Fig."
     } else if it.func() == figure and it.kind == table {
-      "table"
+      "Table"
     } else if it.func() == math.equation {
       "Eq."
     } else if it.func() == heading {
