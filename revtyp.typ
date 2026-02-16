@@ -646,10 +646,10 @@
       } else {
         it.supplement
       }
-      [#supplement #link(it.element.label, text(fill: link-color, numbering(
+      [#supplement #link(it.element.label, numbering(
           "I A",
           ..counter(heading).at(it.element.location()),
-        )))]
+        ))]
     } else {
       it
     }
