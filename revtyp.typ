@@ -629,6 +629,8 @@
       "table"
     } else if it.func() == math.equation {
       "Eq."
+    } else if it.func() == heading {
+      "Sec."
     } else {
       it.supplement
     }
@@ -639,13 +641,15 @@
       show regex("\d"): it => text(fill: link-color, "(" + it + ")")
       it
     } else if it.element != none and it.element.func() == heading {
-      let supplement = if type(it.supplement) == function { "section" } else {
+      let supplement = if type(it.supplement) == function {
+        (it.supplement)(it.element)
+      } else {
         it.supplement
       }
-      [#supplement #text(fill: link-color, numbering(
+      [#supplement #link(it.element.label, text(fill: link-color, numbering(
           "I A",
           ..counter(heading).at(it.element.location()),
-        ))]
+        )))]
     } else {
       it
     }
