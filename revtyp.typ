@@ -114,7 +114,10 @@
       // ensure affiliation is an array
       a.insert("affiliation", (a.remove("affiliation"),))
     }
-    if "name" in a.keys() { a.insert("name", a.name.trim(" ")) }
+    if "name" in a.keys() { 
+      if a.name.starts-with("\n") { a.insert("prebreak", true) }
+      a.insert("name", a.name.trim()) 
+    }
     a
   })
   authors = authors.filter(a => "name" in a.keys())
@@ -328,6 +331,7 @@
             numbers = (..numbers, titlefootnote(author.note))
           }
           numbers = numbers.map(n => [#n]) // convert everything to content for joining
+          if author.at("prebreak", default: false) {linebreak()}
           keep-together({
             author.name
             if "orcid" in author { orcid(author.orcid) + h(-1pt) }
