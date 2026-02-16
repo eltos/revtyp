@@ -577,6 +577,7 @@
     v(0.5em)
   }
   show figure: set figure(supplement: "FIG.")
+  set figure.caption(separator: ". ")
   show figure.caption: it => {
     set par(first-line-indent: 0em)
     set text(size: 9.5pt)
