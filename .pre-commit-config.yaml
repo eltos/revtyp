@@ -1,6 +1,6 @@
-
-repos:
-  - repo: https://github.com/34j/pre-commit-typstyle
-    rev: v0.14.0
-    hooks:
-      - id: typstyle
+#
+#repos:
+#  - repo: https://github.com/34j/pre-commit-typstyle
+#    rev: v0.14.0
+#    hooks:
+#      - id: typstyle
