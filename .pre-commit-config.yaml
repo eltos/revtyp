@@ -4,3 +4,4 @@ repos:
     rev: v0.14.4
     hooks:
       - id: typstyle
+      - args: [--locked]
