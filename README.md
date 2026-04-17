@@ -32,6 +32,12 @@ If you don't yet have the *TeX Gyre Termes* font family, you can install it with
         <td><img src="tests/journal-prab/ref/1.png" width="250px"></td>
         <td><img src="tests/journal-prapplied/ref/1.png" width="250px"></td>
     </tr>
+    <tr><td>PRB</td><td></td><td></td></tr>
+    <tr>
+        <td><img src="tests/journal-prb/ref/1.png" width="250px"></td>
+        <td></td>
+        <td></td>
+    </tr>
 </table>
 
 
