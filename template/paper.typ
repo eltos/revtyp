@@ -6,7 +6,7 @@
  * GitHub repository: https://github.com/eltos/revtyp
  */
 
-#import "@preview/revtyp:0.14.0": revtable, revtyp
+#import "@preview/revtyp:0.14.1": revtable, revtyp
 
 #show: revtyp.with(
   journal: "PRAB",
@@ -38,7 +38,7 @@
 
   // Paper abstract
   abstract: [
-    #lorem(100)
+    #lorem(85)
   ],
 
   // Other optional information
@@ -48,6 +48,7 @@
     //title: [PHYSICAL REVIEW ACCELERATORS AND BEAMS *00*, 000000 (0000)],
     left: (even: none, odd: none),
     right: (even: none, odd: none),
+    //rule: false,
   ),
   footer: (
     title-left: none,
@@ -68,6 +69,7 @@
 
   // Writing utilities
   //show-line-numbers: true,
+
 )
 
 
@@ -155,7 +157,7 @@ Referring to @sec:test or the data in @tab:parameters is also possible.
     height: 2cm,
   ),
   caption: [
-    A column spanning figure. #lorem(25)
+    A wide two-column spanning figure with a longer caption. #lorem(20)
   ],
 ) <fig:rect>
 

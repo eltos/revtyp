@@ -1,6 +1,4 @@
-#import "/revtyp.typ": (
-  revtable, revtyp, widetext-bottom, widetext-page, widetext-top,
-)
+#import "/src/main.typ": *
 
 #show: revtyp.with(
   journal: "PRAB",
@@ -16,7 +14,7 @@
 
 #block(stroke: 1pt + gray, height: 1fr, width: 100%)
 #colbreak()
-#block(stroke: 1pt + gray, height: 18.7cm, width: 100%)
+#block(stroke: 1pt + gray, height: 18.6cm, width: 100%)
 #lorem(19)
 Here we switch to wide text due to a very long equation
 //
@@ -50,7 +48,7 @@ column mode.
 
 #block(stroke: 1pt + gray, height: 12cm, width: 100%)
 #lorem(50)
-#block(stroke: 1pt + gray, height: 11.98cm, width: 100%)
+#block(stroke: 1pt + gray, height: 11cm, width: 100%)
 
 
 
@@ -138,7 +136,7 @@ A new paragraph back in column mode.
 
 #block(stroke: 1pt + gray, height: 12cm, width: 100%)
 #lorem(50)
-#block(stroke: 1pt + gray, height: 11.98cm, width: 100%)
+#block(stroke: 1pt + gray, height: 10cm, width: 100%)
 
 
 
