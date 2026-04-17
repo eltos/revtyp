@@ -167,15 +167,17 @@
   let titlefootnote(text) = context {
     // Re-use footnote if already exists
     for (key, value) in footnotes.get() {
-      if value == text { return key }
+      if value == text {
+        return key
+      }
     }
     // Or else create new
+    let key = titlenotenumbering(footnotes.get().len() + 1)
     footnotes.update(footnotes => {
-      footnotes.insert(titlenotenumbering(footnotes.len() + 1), text)
+      footnotes.insert(key, text)
       footnotes
     })
-    h(0pt, weak: true)
-    super(context footnotes.get().keys().at(-1))
+    key
   }
 
   set footnote.entry(separator: line(length: 15%, stroke: 0.5pt))
@@ -230,7 +232,7 @@
 
     // Title
 
-    show std.title: set block(below: 15pt)
+    show std.title: set block(below: style.var.title-spacing)
     std.title(title)
 
 
@@ -247,13 +249,13 @@
       if "note" in author {
         numbers = (..numbers, titlefootnote(author.note))
       }
-      numbers = numbers.map(n => [#n]) // convert everything to content for joining
+      numbers = numbers.map(n => text(fill: style.var.link-color, [#n]))
       if author.at("prebreak", default: false) {linebreak()}
       keep-together({
         author.name
         if "orcid" in author { orcid(author.orcid) + h(-1pt) }
         if not no-comma { "," }
-        super(typographic: false, numbers.join(","))
+        super(typographic: false, size: 0.7em, numbers.join(","))
       })
     }
 
@@ -311,8 +313,6 @@
         .flatten()
         .dedup()
       also-at = also-at.zip(also-at.map(a => titlefootnote("Also at " + affiliation-text(a)))).to-dict()
-
-      v(1.5pt)
 
       // author list with primary affiliation
       for aff in primary-affiliations {

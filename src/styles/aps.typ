@@ -17,6 +17,7 @@
   footer-font-size: 10.5pt,
   footnote-font-size: 9.3pt,
   // Spacings
+  title-spacing: 16.5pt,
   affiliation-spacing: 6.5pt,
   date-spacing: 8pt,
   abstract-spacing: 7pt,
