@@ -78,9 +78,13 @@
   /// -> bool
   show-line-numbers: false,
 
-  /// Switch to overwrite journal paper format
+  /// Option to overwrite journal paper format
   /// -> auto | string
   paper: auto,
+
+  /// Switch to overwrite column number
+  /// -> auto | bool
+  twocolumn: auto,
 
   /// The content
   /// -> content
@@ -131,6 +135,7 @@
   show: style.layout
 
   set page(..if paper != auto {(paper: paper)})
+  set page(..if twocolumn != auto {(columns: if twocolumn {2} else {1})})
 
 
 
