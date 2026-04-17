@@ -1,8 +1,8 @@
 [package]
 name = "revtyp"
-version = "0.14.1"
+version = "0.15.0"
 entrypoint = "src/main.typ"
-description = "Template for APS PRAB styled papers"
+description = "Prepare papers in the style of the APS Physical Review journals"
 authors = [ "Philipp Niedermayer <@eltos>" ]
 license = "GPL-3.0-only AND MIT-0"
 repository = "https://github.com/eltos/revtyp"
@@ -13,7 +13,9 @@ keywords = [
   "revtex",
   "aps",
   "physical review",
-  "prab"
+  "pra",
+  "prab",
+  "prapplied",
 ]
 categories = [ "paper" ]
 disciplines = [ "physics", "engineering" ]

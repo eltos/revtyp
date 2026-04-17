@@ -41,7 +41,7 @@
   	  bottom: 1.07in,
     ),
 	header-ascent: 0.25in,
-	 footer-descent: 0.5in,
+	footer-descent: 0.5in,
     columns: 2,
   )
   

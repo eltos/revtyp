@@ -25,6 +25,15 @@ If you don't yet have the *TeX Gyre Termes* font family, you can install it with
 ![Thumbnail](thumbnail.webp)
 
 
+<table>
+    <tr><td>PRA</td><td>PRAB</td><td>PRApplied</td></tr>
+    <tr>
+        <td><img src="tests/journal-pra/ref/1.png" width="250px"></td>
+        <td><img src="tests/journal-prab/ref/1.png" width="250px"></td>
+        <td><img src="tests/journal-prapplied/ref/1.png" width="250px"></td>
+    </tr>
+</table>
+
 
 
 ## Licence
