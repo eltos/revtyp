@@ -3,7 +3,7 @@
 [![GitHub Repository](https://img.shields.io/badge/GitHub%20Repo-eltos%2Frevtyp-lightgray)](https://github.com/eltos/revtyp)
 [![Typst Universe](https://img.shields.io/badge/Typst%20Universe-revtyp-%23219dac)](https://typst.app/universe/package/revtyp)
 
-Typst template for papers in the style of the journal [Physical Review Accelerators and Beams (PRAB)](https://journals.aps.org/prab/).
+Typst template for papers in the style of the [Physical Review](https://journals.aps.org/) journals.
 
 
 ## Usage

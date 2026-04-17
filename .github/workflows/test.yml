@@ -11,16 +11,16 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        typst-version: [ '0.14.3' ]
+        typst-version: [ '0.14.2' ]
     steps:
-      - uses: typst-community/setup-typst@v4
+      - uses: typst-community/setup-typst@v5.1
         with:
           typst-version: ${{ matrix.typst-version }}
           allow-prereleases: true
       - name: Install webp
         run: |
           which cwebp || sudo apt install webp
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6.0.2
       - name: Extract version
         run: |
           VERSION=$(awk -F'= *' '/^version/{gsub(/"/,"",$2);print $2}' typst.toml)
@@ -59,7 +59,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install tytanic
-        uses: taiki-e/cache-cargo-install-action@v2
+        uses: taiki-e/cache-cargo-install-action@v3.0.6
         with:
           tool: tytanic@0.3.3
       - name: Install font
