@@ -118,7 +118,7 @@
   // **********************
 
   journal = lower(journal)
-  let supported-journals = ("pra", "prab")
+  let supported-journals = ("pra", "prab", "prapplied")
   assert(
     journal in supported-journals,
     message: "Journal `"
