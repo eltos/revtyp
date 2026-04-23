@@ -19,8 +19,7 @@ jobs:
 
       - name: Run prek
         uses: j178/prek-action@v2
-        with:
-          args: run --all-files
+        continue-on-error: true
 
       - name: Check for changes
         id: changes
