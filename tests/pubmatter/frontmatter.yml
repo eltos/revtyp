@@ -1,0 +1,52 @@
+# Frontmatter
+# Specification see https://typst.app/universe/package/pubmatter/
+
+title: Pubmatter test title
+
+authors:
+  - name: C. Author
+    email: mail@example.com
+    orcid: 0000-0000-0000-0000
+    note: "These authors contributed equally to the work"
+    affiliations: uni
+  - name: P. Coauthor
+    note: "These authors contributed equally to the work"
+    affiliations:
+      - uni
+      - third
+  - name: J. Cockcroft
+    affiliations:
+      - INP
+      - third
+  - name: C. D. Anderson
+    orcid: 0000-0000-0000-0000
+    affiliations: INP
+  - name: N. Bohr
+    affiliations: INP
+  - name: A. Einstein
+    affiliations: INP
+  - name: M. Curie
+    affiliations: INP
+  - name: E. Lawrence
+    affiliations: INP
+
+affiliations:
+  - id: uni
+    name: Town University, City, Country
+  - id: INP
+    name: Insitute of Nobel Physics, Stockhold, Sweden
+  - id: third
+    name: The Third Institute, City, Country
+
+abstract: >
+  This document shows how to use pubmatter to specify the
+  paper's metadata. Lorem ipsum dolor sit amet, consectetur
+  adipiscing elit, sed do eiusmod tempor incididunt ut labore
+  et dolore magnam aliquam quaerat.
+
+doi: 10.1000/xxxx
+
+date: 2000-01-01
+
+#license: CC-BY-4.0
+#citation: ...

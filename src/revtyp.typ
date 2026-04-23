@@ -109,8 +109,13 @@
       affiliations = pubmatter.affiliations.map(a => (a.id, a.name)).to-dict()
     }
     if abstract == none {
-      abstract-title = pubmatter.abstracts.at(0).title
       abstract = pubmatter.abstracts.at(0).content
+    }
+    if doi == none {
+      doi = pubmatter.doi
+    }
+    if date == none {
+      date = [(#pubmatter.date.display("[day padding:none] [month repr:long] [year]");)]
     }
   }
 

@@ -37,13 +37,22 @@
   group-by-affiliation: true,
 
   // Paper abstract
+  //abstract: include "abstract.typ"
   abstract: [
     #lorem(85)
   ],
 
-  // Other optional information
-  date: [(Drafted #datetime.today().display("[day] [month repr:long] [year]");)],
+  // Metadata
+  date: [(Drafted #datetime.today().display("[day padding:none] [month repr:long] [year]");)],
   //doi: "https://doi.org/10.1103/PhysRevAccelBeams.00.000000",
+
+  // Pubmatter (as alternative to the above)
+  //pubmatter: {
+  //  import "@preview/pubmatter:0.2.2"
+  //  pubmatter.load(yaml("frontmatter.yml"))
+  //},
+
+  // Header, footer, etc.
   header: (
     //title: [PHYSICAL REVIEW ACCELERATORS AND BEAMS *00*, 000000 (0000)],
     left: (even: none, odd: none),
