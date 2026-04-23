@@ -1,7 +1,7 @@
 
 #import "aps.typ"
 
-#let var = (:
+#let var = (
   ..aps.var,
   // Layout
   title-descent: 0.38in,
@@ -29,27 +29,26 @@
   var: var,
   content,
 ) = {
-
   show: aps.layout.with(var: var)
-  
+
   set page(
-    width: 8.44in, height: 11.25in,
+    width: 8.44in,
+    height: 11.25in,
     margin: (
-  	  left: 0.68in,
-	  right: 0.7in,
-  	  top: 0.98in,
-  	  bottom: 0.79in,
+      left: 0.68in,
+      right: 0.7in,
+      top: 0.98in,
+      bottom: 0.79in,
     ),
-	header-ascent: 0.265in,
-	footer-descent: 0.25in,
+    header-ascent: 0.265in,
+    footer-descent: 0.25in,
   )
-  
+
   set text(size: 10pt)
   show heading: set text(size: 9pt)
   show figure.caption: set text(size: 9pt)
 
   show cite: set text(fill: var.text-color)
-  
+
   content
-  
 }

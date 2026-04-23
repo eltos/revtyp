@@ -1,7 +1,7 @@
 
 #import "aps.typ"
 
-#let var = (:
+#let var = (
   ..aps.var,
   // Colors
   text-color: rgb("#000000"),
@@ -16,11 +16,9 @@
   var: var,
   content,
 ) = {
-
   show: aps.layout.with(var: var)
 
   show cite: set text(fill: var.text-color)
-  
+
   content
-  
 }

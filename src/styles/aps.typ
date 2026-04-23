@@ -29,35 +29,33 @@
   var: var,
   content,
 ) = {
-
-
   // Page layout
   // ***********
 
   set page(
     paper: "us-letter",
     margin: (
-  	  x: 0.72in,
-  	  top: 0.7in,
-  	  bottom: 1.07in,
+      x: 0.72in,
+      top: 0.7in,
+      bottom: 1.07in,
     ),
-	header-ascent: 0.25in,
-	footer-descent: 0.5in,
+    header-ascent: 0.25in,
+    footer-descent: 0.5in,
     columns: 2,
   )
-  
+
   set columns(gutter: 0.25in)
 
 
   // Typography
   // **********
-  
+
   set text(
     font: "TeX Gyre Termes",
     size: 10.5pt,
     fill: var.text-color,
     //tracking: 0.1pt, // LaTeX look
-	overhang: false,
+    overhang: false,
   )
 
   set par(
@@ -81,7 +79,7 @@
 
   show title: set text(size: 12.5pt, weight: "bold", tracking: 0.1pt, spacing: 100% + 0.1pt)
   show title: set par(leading: 0.4em)
-  
+
   show heading: set text(
     size: 10.5pt,
     weight: "bold",
@@ -126,7 +124,7 @@
   })
   show ref: it => {
     if it.element != none and it.element.func() == math.equation {
-      show regex("\d+"): it => text(fill: var.link-color, "("+it+")")
+      show regex("\d+"): it => text(fill: var.link-color, "(" + it + ")")
       it
     } else {
       it
@@ -148,5 +146,4 @@
 
 
   content
-  
 }
