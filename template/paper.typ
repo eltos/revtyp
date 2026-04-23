@@ -78,7 +78,6 @@
 
   // Writing utilities
   //show-line-numbers: true,
-
 )
 
 
