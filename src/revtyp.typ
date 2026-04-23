@@ -356,7 +356,7 @@
 
 
     // Dates
-    if doi != none {
+    if date != none {
       v(style.var.date-spacing)
       set text(size: style.var.abstract-font-size)
       date
