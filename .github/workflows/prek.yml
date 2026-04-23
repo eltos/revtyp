@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   prek:
-    if: "!contains(github.event.head_commit.message, 'prek fixes')"
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -36,8 +36,8 @@ jobs:
       - name: Commit & push to PR
         if: github.event_name == 'pull_request' && steps.changes.outputs.changed == 'true'
         run: |
-          git config user.name "Prek Bot"
-          git config user.email "prek-bot@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -A
           git commit -m "Apply prek fixes"
           git push
@@ -49,5 +49,5 @@ jobs:
         with:
           branch: ${{ (github.head_ref || github.ref_name) }}-prek-auto-fixes
           commit-message: "Apply prek fixes"
-          author: "Prek Bot <prek-bot@users.noreply.github.com>"
+          author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
           title: "Formatting fixes (prek)"
