@@ -45,7 +45,7 @@ jobs:
         if: github.event_name == 'push' && steps.changes.outputs.changed == 'true'
         uses: peter-evans/create-pull-request@v6
         with:
-          branch: prek/auto-fixes
+          branch: ${{ (github.head_ref || github.ref_name) }}-prek-auto-fixes
           commit-message: "Apply prek fixes"
           author: "Prek Bot <prek-bot@users.noreply.github.com>"
           title: "Formatting fixes (prek)"
