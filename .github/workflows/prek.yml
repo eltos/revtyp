@@ -1,0 +1,52 @@
+name: prek autofix
+
+on:
+  pull_request:
+  push:
+    branches: [prek]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  prek:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run prek
+        uses: j178/prek-action@v2
+        with:
+          args: run --all-files
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if git diff --quiet; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      # --- PR behavior: push fixes directly ---
+      - name: Commit & push to PR
+        if: github.event_name == 'pull_request' && steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "Prek Bot"
+          git config user.email "prek-bot@users.noreply.github.com"
+          git add -A
+          git commit -m "Apply prek fixes"
+          git push
+
+      # --- main branch behavior: create PR instead ---
+      - name: Create PR with fixes
+        if: github.event_name == 'push' && steps.changes.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: prek/auto-fixes
+          commit-message: "Apply prek fixes"
+          author: "Prek Bot <prek-bot@users.noreply.github.com>"
+          title: "Formatting fixes (prek)"
