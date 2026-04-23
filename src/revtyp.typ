@@ -3,46 +3,36 @@
 
 
 #let revtyp(
-
   /// Journal
   /// -> str
   journal: "PRAB",
-
   /// The paper title
   /// -> content | str | none
   title: none,
-
   /// The list of authors
   /// where each author is a dictionary with keys `name` or `names`, `at` and optionally also `email` and `orcid`
   /// -> array
   authors: (),
-
   /// The list of affiliations
   /// mapping the keys used in the authors list as `at` to the affiliation name
   /// -> dictionary
   affiliations: (:),
-
   /// Switch to change author affiliation style from using superscripts to grouping by affiliation
   /// -> bool
   group-by-affiliation: false,
-
   /// The paper abstract
   /// -> content | str | none
   abstract: none,
-
   /// Optional pubmatter object
   /// with `title`, `author`, `affiliations` and/or `abstract` if not passed explicitly
   /// -> dictionary
   pubmatter: none,
-
   /// Date(s)
   /// -> content | str | none
   date: none,
-
   /// DOI
   /// -> str
   doi: none,
-
   /// Header contents
   /// -> content | str | none
   header: (
@@ -57,7 +47,6 @@
     ),
     rule: true,
   ),
-
   /// Footer contents
   /// -> content | str | none
   footer: (
@@ -65,33 +54,25 @@
     title-right: none,
     center: context counter(page).display(),
   ),
-
   /// Optional note in the footer
   /// -> none | str
   footnote-text: none,
-
   /// To make footnotes span over both columns (instad of left column only)
   /// -> bool
   wide-footnotes: false,
-
   /// Switch to show line numbers
   /// -> bool
   show-line-numbers: false,
-
   /// Option to overwrite journal paper format
   /// -> auto | string
   paper: auto,
-
   /// Switch to overwrite column number
   /// -> auto | bool
   twocolumn: auto,
-
   /// The content
   /// -> content
   content,
-
 ) = {
-
   // Parameter sanitization and pubmatter support
   // ********************************************
 
@@ -133,22 +114,22 @@
     message: "Journal `"
       + str(journal)
       + "` not supported. Choose one of: `"
-      + supported-journals.join("`, `", last: " or ") + "`.",
+      + supported-journals.join("`, `", last: " or ")
+      + "`.",
   )
 
   import "styles/" + journal + ".typ" as style
   show: style.layout
 
-  set page(..if paper != auto {(paper: paper)})
-  set page(..if twocolumn != auto {(columns: if twocolumn {2} else {1})})
-
+  set page(..if paper != auto { (paper: paper) })
+  set page(..if twocolumn != auto { (columns: if twocolumn { 2 } else { 1 }) })
 
 
   // Draft utilities
   // ***************
 
   show: as-draft.with(
-    show-line-numbers: show-line-numbers
+    show-line-numbers: show-line-numbers,
   )
 
 
@@ -188,29 +169,26 @@
   set footnote.entry(separator: line(length: 15%, stroke: 0.5pt))
 
 
-
   // Header and footer
   // *****************
 
-  set page(header: context
-    if here().page() == 1 {
-      // Header on page 1
-      set align(center)
-      set text(size: style.var.first-header-font-size)
-      move(dy: style.var.first-header-dy, upper(header.title))
-      if header.rule {place(dy: style.var.first-rule-dy, line(length: 100%))}
+  set page(header: context if here().page() == 1 {
+    // Header on page 1
+    set align(center)
+    set text(size: style.var.first-header-font-size)
+    move(dy: style.var.first-header-dy, upper(header.title))
+    if header.rule { place(dy: style.var.first-rule-dy, line(length: 100%)) }
+  } else {
+    set text(size: style.var.header-font-size)
+    if calc.even(here().page()) {
+      // Header on page 2, 4, 6, ...
+      header.left.even + h(1fr) + header.right.even
     } else {
-      set text(size: style.var.header-font-size)
-      if calc.even(here().page()) {
-        // Header on page 2, 4, 6, ...
-        header.left.even + h(1fr)+ header.right.even
-      } else {
-        // Header on page 3, 5, 7, ...
-        header.left.odd + h(1fr) + header.right.odd
-      }
-      if header.rule {place(dy: style.var.rule-dy, line(length: 100%))}
+      // Header on page 3, 5, 7, ...
+      header.left.odd + h(1fr) + header.right.odd
     }
-  )
+    if header.rule { place(dy: style.var.rule-dy, line(length: 100%)) }
+  })
   set page(footer: context {
     set text(size: style.var.footer-font-size)
     if here().page() == 1 {
@@ -255,7 +233,7 @@
         numbers = (..numbers, titlefootnote(author.note))
       }
       numbers = numbers.map(n => text(fill: style.var.link-color, [#n]))
-      if author.at("prebreak", default: false) {linebreak()}
+      if author.at("prebreak", default: false) { linebreak() }
       keep-together({
         author.name
         if "orcid" in author { orcid(author.orcid) + h(-1pt) }
@@ -306,7 +284,6 @@
     //set par(leading: 0.45em)
 
     if group-by-affiliation {
-
       // Author list grouped by affiliation
 
       let primary-affiliations = authors.map(a => a.affiliation.first()).dedup()
@@ -317,7 +294,9 @@
         .map(a => a.affiliation.slice(1))
         .flatten()
         .dedup()
-      also-at = also-at.zip(also-at.map(a => titlefootnote("Also at " + affiliation-text(a)))).to-dict()
+      also-at = also-at
+        .zip(also-at.map(a => titlefootnote("Also at " + affiliation-text(a))))
+        .to-dict()
 
       // author list with primary affiliation
       for aff in primary-affiliations {
@@ -332,11 +311,11 @@
 
         affiliation-entry(aff)
 
-        if (aff != primary-affiliations.last()) { v(style.var.affiliation-spacing) } else { v(1pt) }
+        if (aff != primary-affiliations.last()) {
+          v(style.var.affiliation-spacing)
+        } else { v(1pt) }
       }
-
     } else {
-
       // Author list with superscript affiliations
 
       let at = authors.map(a => a.affiliation).flatten().dedup()
@@ -356,7 +335,6 @@
         affiliation-entry(a, number: i)
         linebreak()
       }
-
     }
 
 
@@ -374,7 +352,11 @@
     block(width: style.var.abstract-width, {
       set align(left)
       set text(size: style.var.abstract-font-size)
-      set par(justify: true, leading: style.var.abstract-leading, first-line-indent: 0pt)
+      set par(
+        justify: true,
+        leading: style.var.abstract-leading,
+        first-line-indent: 0pt,
+      )
 
       h(1em) + abstract
 
@@ -384,13 +366,10 @@
         v(8pt)
         doi = doi.find(regex("10\.\S+")) // DOIs always start with 10.
         [DOI: #link("https://doi.org/" + doi, doi)]
-
       }
-
     })
 
     v(style.var.frontmatter-spacing)
-
   })
 
 
@@ -408,7 +387,7 @@
       set text(size: style.var.footnote-font-size)
 
       context for (symbol, text) in footnotes.get() {
-        h(0.7em) + super(symbol) +  text
+        h(0.7em) + super(symbol) + text
         linebreak()
       }
 
@@ -419,11 +398,8 @@
         v(9pt)
         footnote-text
       }
-
     }),
   )
-
-
 
 
   // Spacings
@@ -458,8 +434,6 @@
   show math.equation.where(block: true): set block(above: 15pt, below: 14pt)
 
 
-
-
   // Content
   // *******
 
@@ -485,7 +459,6 @@
   }
 
 
-
   // Bibliography
   // ************
 
@@ -494,7 +467,6 @@
     style: "revtyp.csl", // Modified for typst link injection
   )
   show bibliography: it => {
-
     // Handling of typst link injection
     show "<<<LINK>>>": [#metadata(none) <LINK> ] // Link marker
     show "<<<END>>>": [#metadata(none) <END> ] // End marker
@@ -533,7 +505,6 @@
 
 
   content
-
 }
 
 
