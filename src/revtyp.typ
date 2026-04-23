@@ -3,46 +3,46 @@
 
 
 #let revtyp(
-
+  //
   /// Journal
   /// -> str
   journal: "PRAB",
-
-  /// The paper title
-  /// -> content | str | none
+  //
+  // The paper title
+  // -> content | str | none
   title: none,
-
-  /// The list of authors
-  /// where each author is a dictionary with keys `name` or `names`, `at` and optionally also `email` and `orcid`
-  /// -> array
+  //
+  // The list of authors
+  // where each author is a dictionary with keys `name` or `names`, `at` and optionally also `email` and `orcid`
+  // -> array
   authors: (),
-
+  //
   /// The list of affiliations
   /// mapping the keys used in the authors list as `at` to the affiliation name
   /// -> dictionary
   affiliations: (:),
-
+  //
   /// Switch to change author affiliation style from using superscripts to grouping by affiliation
   /// -> bool
   group-by-affiliation: false,
-
+  //
   /// The paper abstract
   /// -> content | str | none
   abstract: none,
-
+  //
   /// Optional pubmatter object
   /// with `title`, `author`, `affiliations` and/or `abstract` if not passed explicitly
   /// -> dictionary
   pubmatter: none,
-
+  //
   /// Date(s)
   /// -> content | str | none
   date: none,
-
+  //
   /// DOI
   /// -> str
   doi: none,
-
+  //
   /// Header contents
   /// -> content | str | none
   header: (
@@ -57,7 +57,7 @@
     ),
     rule: true,
   ),
-
+  //
   /// Footer contents
   /// -> content | str | none
   footer: (
@@ -65,33 +65,33 @@
     title-right: none,
     center: context counter(page).display(),
   ),
-
+  //
   /// Optional note in the footer
   /// -> none | str
   footnote-text: none,
-
+  //
   /// To make footnotes span over both columns (instad of left column only)
   /// -> bool
   wide-footnotes: false,
-
+  //
   /// Switch to show line numbers
   /// -> bool
   show-line-numbers: false,
-
+  //
   /// Option to overwrite journal paper format
   /// -> auto | string
   paper: auto,
-
+  //
   /// Switch to overwrite column number
   /// -> auto | bool
   twocolumn: auto,
-
+  //
   /// The content
   /// -> content
   content,
 
 ) = {
-
+  //
   // Parameter sanitization and pubmatter support
   // ********************************************
 

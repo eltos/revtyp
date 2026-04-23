@@ -1,0 +1,55 @@
+name: Prek autofix
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  prek:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+
+      - name: Install prek
+        uses: j178/prek-action@v2
+        with:
+          install-only: true
+
+      - name: Run prek
+        id: changes
+        run: |
+          set +e
+          prek run --all-files
+          code=$?
+          # exit code 0=passed, 1=formatted, 2=error
+          [ $code -ge 2 ] && exit $code
+          echo "changed=$code" >> $GITHUB_OUTPUT
+
+      # --- PR behavior: push fixes directly ---
+      - name: Commit & push to PR
+        if: github.event_name == 'pull_request' && steps.changes.outputs.changed == '1'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Apply prek fixes"
+          git push
+
+      # --- main branch behavior: create PR instead ---
+      - name: Create PR with fixes
+        if: github.event_name == 'push' && steps.changes.outputs.changed == '1'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: ${{ (github.head_ref || github.ref_name) }}-prek-auto-fixes
+          commit-message: "Apply prek fixes"
+          author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
+          title: "Formatting fixes (prek)"
