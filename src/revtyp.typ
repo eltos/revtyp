@@ -89,7 +89,6 @@
   /// The content
   /// -> content
   content,
-
 ) = {
   //
   // Parameter sanitization and pubmatter support
@@ -133,22 +132,22 @@
     message: "Journal `"
       + str(journal)
       + "` not supported. Choose one of: `"
-      + supported-journals.join("`, `", last: " or ") + "`.",
+      + supported-journals.join("`, `", last: " or ")
+      + "`.",
   )
 
   import "styles/" + journal + ".typ" as style
   show: style.layout
 
-  set page(..if paper != auto {(paper: paper)})
-  set page(..if twocolumn != auto {(columns: if twocolumn {2} else {1})})
-
+  set page(..if paper != auto { (paper: paper) })
+  set page(..if twocolumn != auto { (columns: if twocolumn { 2 } else { 1 }) })
 
 
   // Draft utilities
   // ***************
 
   show: as-draft.with(
-    show-line-numbers: show-line-numbers
+    show-line-numbers: show-line-numbers,
   )
 
 
@@ -188,29 +187,26 @@
   set footnote.entry(separator: line(length: 15%, stroke: 0.5pt))
 
 
-
   // Header and footer
   // *****************
 
-  set page(header: context
-    if here().page() == 1 {
-      // Header on page 1
-      set align(center)
-      set text(size: style.var.first-header-font-size)
-      move(dy: style.var.first-header-dy, upper(header.title))
-      if header.rule {place(dy: style.var.first-rule-dy, line(length: 100%))}
+  set page(header: context if here().page() == 1 {
+    // Header on page 1
+    set align(center)
+    set text(size: style.var.first-header-font-size)
+    move(dy: style.var.first-header-dy, upper(header.title))
+    if header.rule { place(dy: style.var.first-rule-dy, line(length: 100%)) }
+  } else {
+    set text(size: style.var.header-font-size)
+    if calc.even(here().page()) {
+      // Header on page 2, 4, 6, ...
+      header.left.even + h(1fr) + header.right.even
     } else {
-      set text(size: style.var.header-font-size)
-      if calc.even(here().page()) {
-        // Header on page 2, 4, 6, ...
-        header.left.even + h(1fr)+ header.right.even
-      } else {
-        // Header on page 3, 5, 7, ...
-        header.left.odd + h(1fr) + header.right.odd
-      }
-      if header.rule {place(dy: style.var.rule-dy, line(length: 100%))}
+      // Header on page 3, 5, 7, ...
+      header.left.odd + h(1fr) + header.right.odd
     }
-  )
+    if header.rule { place(dy: style.var.rule-dy, line(length: 100%)) }
+  })
   set page(footer: context {
     set text(size: style.var.footer-font-size)
     if here().page() == 1 {
@@ -255,7 +251,7 @@
         numbers = (..numbers, titlefootnote(author.note))
       }
       numbers = numbers.map(n => text(fill: style.var.link-color, [#n]))
-      if author.at("prebreak", default: false) {linebreak()}
+      if author.at("prebreak", default: false) { linebreak() }
       keep-together({
         author.name
         if "orcid" in author { orcid(author.orcid) + h(-1pt) }
@@ -306,7 +302,6 @@
     //set par(leading: 0.45em)
 
     if group-by-affiliation {
-
       // Author list grouped by affiliation
 
       let primary-affiliations = authors.map(a => a.affiliation.first()).dedup()
@@ -334,9 +329,7 @@
 
         if (aff != primary-affiliations.last()) { v(style.var.affiliation-spacing) } else { v(1pt) }
       }
-
     } else {
-
       // Author list with superscript affiliations
 
       let at = authors.map(a => a.affiliation).flatten().dedup()
@@ -356,7 +349,6 @@
         affiliation-entry(a, number: i)
         linebreak()
       }
-
     }
 
 
@@ -384,13 +376,10 @@
         v(8pt)
         doi = doi.find(regex("10\.\S+")) // DOIs always start with 10.
         [DOI: #link("https://doi.org/" + doi, doi)]
-
       }
-
     })
 
     v(style.var.frontmatter-spacing)
-
   })
 
 
@@ -408,7 +397,7 @@
       set text(size: style.var.footnote-font-size)
 
       context for (symbol, text) in footnotes.get() {
-        h(0.7em) + super(symbol) +  text
+        h(0.7em) + super(symbol) + text
         linebreak()
       }
 
@@ -419,11 +408,8 @@
         v(9pt)
         footnote-text
       }
-
     }),
   )
-
-
 
 
   // Spacings
@@ -458,8 +444,6 @@
   show math.equation.where(block: true): set block(above: 15pt, below: 14pt)
 
 
-
-
   // Content
   // *******
 
@@ -485,7 +469,6 @@
   }
 
 
-
   // Bibliography
   // ************
 
@@ -494,7 +477,6 @@
     style: "revtyp.csl", // Modified for typst link injection
   )
   show bibliography: it => {
-
     // Handling of typst link injection
     show "<<<LINK>>>": [#metadata(none) <LINK> ] // Link marker
     show "<<<END>>>": [#metadata(none) <END> ] // End marker
@@ -503,9 +485,7 @@
     show linkify-magic: it => context {
       // find the link of this citation
       let target = query(
-        selector(link)
-          .after(selector(label("LINK")).after(here()))
-          .before(selector(label("END")).after(here())),
+        selector(link).after(selector(label("LINK")).after(here())).before(selector(label("END")).after(here())),
       )
         .last(default: link("?"))
         .dest
@@ -533,7 +513,6 @@
 
 
   content
-
 }
 
 
