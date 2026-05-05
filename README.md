@@ -45,6 +45,7 @@ If you don't yet have the *TeX Gyre Termes* font family, you can install it with
 
 See the template [paper.typ](template/paper.typ) for an example
 
+#### Front matter
 ```typ
 #import "@preview/revtyp:0.15.0": revtable, revtyp
 
@@ -92,6 +93,18 @@ Available parameters:
   - `center` (str or content, optional): Central footer for all pages, typically used for the page number, e.g. `[page #context counter(page).display()]`
 - `footnote-text` (content, optional): Test in the bottom left column on the title page below the footnotes, typically used for a copyright note.
 - `show-line-numbers` (bool, optional): Switch to en-/disable line numbers during review.
+
+#### Widetext
+Use the **widetext** environments to temporarily switch from two column layout to single column layout:
+```typ
+Use "widetext" to switch from two column mode to
+#widetext-top(continue-paragraph-begin: true, continue-paragraph-end: false)[
+    single column mode, e.g. to include long equations.
+]
+This paragraph is back in two column layout...
+```
+Currently, widetext environments are limited to appear at the top (`widetext-top`) or bottom of a page (`widetext-bottom`) or fill a full page (`widetext-page`), i.e. you cannot switch to widetext and back to two column mode within a single page. Also, you have to manually adjust the begin/end of the environments in the source text to match with the layout.
+Set `continue-paragraph-begin` to `true` if the text at the beginning of the widetext environment belongs to the same paragraph as the text before it, or to `false` otherwise. Set `continue-paragraph-end` accordingly for the text at the end / after the widetext environment. In any case, avoid empty lines before/after the widetext environments as well as at the begining/end of their contents to ensure paragraph-continuation works as expected. See [widetext/test.typ](tests/widetext/test.typ) for a comprehensive example.
 
 
 
