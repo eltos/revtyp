@@ -9,14 +9,22 @@ permissions:
   contents: write
   pull-requests: write
 
+env:
+  # SSH Deploy Key with write access (needed to trigger push workflow runs in created pull request)
+  SSH_KEY: ${{ secrets.SSH_KEY_GITHUB_ACTION }}
+
 jobs:
   prek:
-    if: github.actor != 'github-actions[bot]'
+    if: |
+      github.actor != 'github-actions[bot]' &&
+      !endsWith(github.ref_name, '-prek-auto-fixes')&&
+      !endsWith(github.head_ref || '', '-prek-auto-fixes')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
+          ssh-key: ${{ env.SSH_KEY }}
           fetch-depth: 0
 
       - name: Install prek
