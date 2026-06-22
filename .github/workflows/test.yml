@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        typst-version: [ '0.14.2' ]
+        typst-version: [ '0.15.0' ]
     steps:
       - uses: typst-community/setup-typst@v5.1
         with:
