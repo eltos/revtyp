@@ -1,6 +1,6 @@
 [package]
 name = "revtyp"
-version = "0.15.0"
+version = "0.15.1"
 entrypoint = "src/main.typ"
 description = "Prepare papers in the style of the APS Physical Review journals"
 authors = [ "Philipp Niedermayer <@eltos>" ]
