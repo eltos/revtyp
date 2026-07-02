@@ -85,7 +85,7 @@
 #import "@preview/physica:0.9.8": *
 #import "@preview/zero:0.6.1"
 #import "@preview/lilaq:0.6.0" as lq
-#import "@preview/glossy:0.7.0"
+#import "@preview/glossy:0.9.2"
 
 #show: glossy.init-glossary.with((
   APS: "American Physical Society",
