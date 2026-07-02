@@ -118,8 +118,6 @@
       "Eq."
     } else if it.func() == heading {
       "Sec."
-    } else {
-      it.supplement
     }
   })
   show ref: it => {
