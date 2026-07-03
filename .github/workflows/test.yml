@@ -20,7 +20,7 @@ jobs:
       - name: Install webp
         run: |
           which cwebp || sudo apt install webp
-      - uses: actions/checkout@v6.0.2
+      - uses: actions/checkout@v7.0.0
       - name: Extract version
         run: |
           VERSION=$(awk -F'= *' '/^version/{gsub(/"/,"",$2);print $2}' typst.toml)
@@ -59,9 +59,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install tytanic
-        uses: taiki-e/cache-cargo-install-action@v3.0.6
+        uses: taiki-e/cache-cargo-install-action@v3.0.7
         with:
-          tool: tytanic@0.3.3
+          tool: tytanic@0.4.0
       - name: Install font
         run: |
           sudo apt install tex-gyre
